@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Find the Adjective — Class VII</title>
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0;width:100%;height:100%;font-family:Arial,Helvetica,sans-serif}
+  body{
+    background:#111;
+    color:#17212b;
+    display:flex;align-items:center;justify-content:center;
+    overflow:hidden;
+  }
+  button{font:inherit}
+  .game{
+    width:100vw;height:100vh;
+    max-width:1920px;max-height:1080px;
+    position:relative;overflow:hidden;
+    border:0;border-radius:0;
+    background:linear-gradient(#aee0ff 0 65%,#73c83e 65% 71%,#9b4f18 71% 100%);
+  }
+  .cloud{position:absolute;background:#fff9;border:3px solid #8bbbd5;border-radius:30px;width:160px;height:44px;top:8%;left:7%;opacity:.8}
+  .cloud:before,.cloud:after{content:"";position:absolute;background:#fff9;border:3px solid #8bbbd5;border-bottom:0;border-radius:50%;bottom:15px}
+  .cloud:before{width:62px;height:62px;left:20px}.cloud:after{width:82px;height:82px;left:70px}
+  .cloud.two{left:auto;right:9%;top:13%;transform:scale(.8)}
+  .tree{position:absolute;right:4%;bottom:27%;width:170px;height:260px;z-index:0}
+  .tree .trunk{position:absolute;width:46px;height:145px;background:#96501e;left:64px;bottom:0;border:4px solid #663314;border-radius:10px}
+  .tree .leaf{position:absolute;width:170px;height:170px;background:#59bd38;border:5px solid #318323;border-radius:50%;top:0;box-shadow:inset 22px 11px #82db50}
+  .tree .leaf:after{content:"";position:absolute;width:40px;height:40px;background:#77d64b;border-radius:50%;left:25px;top:34px;box-shadow:70px 13px #79d74e,38px 72px #79d74e}
+  .ground{position:absolute;left:0;right:0;bottom:0;height:29%;z-index:0;background:repeating-linear-gradient(90deg,#9b4f18 0 25px,#844116 25px 29px);border-top:7px solid #4c9c27}
+  .grass{position:absolute;left:0;right:0;bottom:29%;height:17px;background:repeating-linear-gradient(90deg,#4da528 0 18px,#68bf35 18px 34px);z-index:1}
+  .hud{
+    position:absolute;top:18px;left:24px;right:24px;z-index:20;
+    display:flex;justify-content:space-between;align-items:center
+  }
+  .pixel-heart{font-size:28px;letter-spacing:4px;filter:drop-shadow(2px 2px #9d2929)}
+  .progress{font-weight:1000;background:#fff;border:4px solid #263238;border-radius:12px;padding:8px 14px;box-shadow:4px 4px #263238}
+  .screen{
+    position:relative;z-index:4;
+    width:100%;height:100%;
+    padding:70px 7% 6%;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;
+  }
+  .hidden{display:none!important}
+  h1,h2{margin:0;font-weight:1000;text-transform:uppercase}
+  .title{
+    font-size:clamp(42px,6.2vw,90px);
+    letter-spacing:2px;color:#fff;
+    text-shadow:4px 4px #111,-2px -2px #111,2px -2px #111,-2px 2px #111;
+    margin-bottom:15px
+  }
+  .subtitle{font-size:clamp(15px,1.5vw,23px);font-weight:900;letter-spacing:1px;background:#fffddc;border:3px solid #263238;border-radius:12px;padding:10px 18px;box-shadow:5px 5px #263238}
+  .students{display:flex;gap:20px;align-items:end;margin:15px 0 6px}
+  .student{font-size:clamp(58px,6vw,86px);line-height:1;filter:drop-shadow(3px 4px #263238)}
+  .speech{min-height:34px;font-size:clamp(15px,1.4vw,21px);font-weight:900;color:#4b3c00}
+  .start,.next,.again{
+    border:4px solid #263238;border-radius:18px;background:#8bc34a;color:#1c2b10;
+    padding:14px 32px;font-weight:1000;cursor:pointer;
+    box-shadow:5px 5px #263238;transition:.12s transform,.12s box-shadow,.12s filter;margin-top:13px;
+    font-size:clamp(17px,1.6vw,25px)
+  }
+  .start:hover,.next:hover,.again:hover{transform:translate(2px,2px);box-shadow:3px 3px #263238;filter:brightness(1.08)}
+  .question-card{
+    width:min(1000px,88vw);
+    background:#fffdf0;border:5px solid #263238;border-radius:20px;
+    padding:22px 28px;box-shadow:8px 8px #263238;
+  }
+  .qnum{font-size:clamp(17px,1.5vw,23px);font-weight:1000;color:#477c2e;text-transform:uppercase}
+  .sentence{font-size:clamp(28px,3.5vw,48px);font-weight:1000;margin:9px 0 18px}
+  .prompt{font-size:clamp(16px,1.5vw,22px);font-weight:900;margin-bottom:13px}
+  .options{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .option{
+    min-height:62px;border:4px solid #263238;border-radius:14px;background:#e7f4ff;
+    cursor:pointer;font-size:clamp(18px,1.7vw,25px);font-weight:1000;text-align:left;padding:12px 18px;
+    box-shadow:4px 4px #263238;transition:.12s
+  }
+  .option:hover{transform:translateY(-2px);background:#fff3a7}
+  .option:disabled{cursor:default;opacity:1}
+  .option.correct{background:#9bea78;border-color:#246d21}
+  .option.wrong{background:#ffaaa6;border-color:#8d2622}
+  .feedback{
+    width:min(1000px,88vw);margin-top:13px;background:#fff;border:5px solid #263238;border-radius:18px;
+    padding:12px 20px;box-shadow:7px 7px #263238;animation:pop .22s ease-out
+  }
+  .feedback.good{background:#eaffdf}.feedback.bad{background:#fff0ef}
+  .feedback h2{font-size:clamp(23px,2.2vw,34px)}.feedback p{font-size:clamp(15px,1.35vw,20px);font-weight:800;margin:5px 0}
+  .answer{font-size:clamp(21px,2vw,29px);font-weight:1000;color:#2e7d32}
+  @keyframes pop{from{transform:scale(.94);opacity:0}to{transform:scale(1);opacity:1}}
+  .final-title{font-size:clamp(44px,6vw,82px);color:#fff;text-shadow:4px 4px #111}
+  .trophy{font-size:clamp(75px,9vw,125px);filter:drop-shadow(4px 5px #263238);animation:bounce 1s infinite alternate}
+  @keyframes bounce{to{transform:translateY(-10px) rotate(-3deg)}}
+  .score{font-size:clamp(21px,2vw,29px);font-weight:1000;background:#fff8b0;border:4px solid #263238;border-radius:15px;padding:9px 20px;box-shadow:4px 4px #263238}
+  .stars{font-size:clamp(25px,3vw,38px);letter-spacing:8px}
+  .confetti{position:absolute;inset:0;pointer-events:none;z-index:10;overflow:hidden}
+  .confetti i{position:absolute;width:10px;height:18px;background:#ff5252;animation:fall 1.6s linear forwards}
+  .confetti i:nth-child(2n){background:#ffd740}.confetti i:nth-child(3n){background:#7c4dff}.confetti i:nth-child(4n){background:#00c853}
+  @keyframes fall{0%{transform:translateY(-30px) rotate(0);opacity:1}100%{transform:translateY(110vh) rotate(720deg);opacity:0}}
+  .fullscreen{
+    position:absolute;right:24px;bottom:18px;z-index:30;
+    border:3px solid #263238;border-radius:10px;background:#fff;padding:8px 12px;
+    font-weight:900;cursor:pointer;box-shadow:3px 3px #263238
+  }
+  @media(max-width:800px){
+    body{overflow:auto;background:#b9e4ff}
+    .game{height:100vh;min-height:640px}
+    .screen{padding:65px 18px 50px}
+    .options{grid-template-columns:1fr}
+    .question-card{width:94vw;padding:17px}
+    .tree{transform:scale(.55);right:-30px;bottom:22%}
+    .cloud{transform:scale(.7);left:0}.cloud.two{right:0}
+    .fullscreen{right:12px;bottom:10px}
+  }
+  @media(max-height:720px) and (min-width:801px){
+    .screen{padding-top:55px;padding-bottom:38px}
+    .question-card{padding:15px 22px}
+    .option{min-height:52px;padding:9px 14px}
+    .feedback{padding:9px 17px;margin-top:8px}
+    .students{margin:7px 0 2px}
+    .student{font-size:58px}
+    .tree{transform:scale(.72);transform-origin:bottom right}
+  }
+
+</style>
+</head>
+<body>
+<div class="game" id="game">
+  <div class="cloud"></div><div class="cloud two"></div>
+  <div class="tree"><div class="leaf"></div><div class="trunk"></div></div>
+  <div class="ground"></div><div class="grass"></div>
+
+  <button class="fullscreen" id="fullscreenBtn" type="button">⛶ FULL SCREEN</button>
+
+  <div class="hud">
+    <div class="pixel-heart" id="hearts">❤️❤️❤️❤️❤️</div>
+    <div class="progress" id="progress">START</div>
+  </div>
+
+  <main class="screen" id="startScreen">
+    <div class="title">🎯 FIND THE ADJECTIVE</div>
+    <div class="subtitle">ADJECTIVE CHALLENGE • CLASS VII • 7 QUESTIONS</div>
+    <div class="students"><div class="student">👦🏻</div><div class="student">👧🏻</div></div>
+    <div class="speech" id="startSpeech">Ready to test your grammar skills?</div>
+    <button class="start" id="startBtn" type="button">START QUIZ →</button>
+  </main>
+
+  <main class="screen hidden" id="quizScreen">
+    <div class="question-card">
+      <div class="qnum" id="qnum"></div>
+      <div class="sentence" id="sentence"></div>
+      <div class="prompt" id="prompt"></div>
+      <div class="options" id="options"></div>
+    </div>
+    <div class="students" id="quizStudents">
+      <div class="student" id="boy">👦🏻</div><div class="student" id="girl">👧🏻</div>
+    </div>
+    <div class="speech" id="speech">Choose the best answer!</div>
+    <div class="feedback hidden" id="feedback" aria-live="polite"></div>
+    <button class="next hidden" id="nextBtn" type="button">NEXT QUESTION →</button>
+  </main>
+
+  <main class="screen hidden" id="finalScreen">
+    <div class="confetti" id="confetti"></div>
+    <div class="final-title">🎉 QUIZ COMPLETE! 🎉</div>
+    <div class="trophy">🏆</div>
+    <div class="score" id="finalScore"></div>
+    <div class="stars">⭐ ⭐ ⭐</div>
+    <p style="font-size:23px;font-weight:1000;background:#fff;padding:12px 18px;border:4px solid #263238;border-radius:14px;box-shadow:4px 4px #263238">
+      ADJECTIVES DESCRIBE NOUNS
+    </p>
+    <div class="students"><div class="student">👦🏻</div><div class="student">👧🏻</div></div>
+    <button class="again" id="againBtn" type="button">PLAY AGAIN 🔄</button>
+  </main>
+</div>
+
+<script>
+(() => {
+  const questions = [
+    {sentence:"The tall boy is running.", options:["BOY","TALL","RUNNING","THE"], answer:1, adjective:"TALL", noun:"BOY"},
+    {sentence:"She has a red dress.", options:["SHE","HAS","RED","DRESS"], answer:2, adjective:"RED", noun:"DRESS"},
+    {sentence:"The little puppy is cute.", options:["PUPPY","LITTLE","CUTE","IS"], answer:1, adjective:"LITTLE", noun:"PUPPY"},
+    {sentence:"I have a blue bag.", options:["HAVE","BAG","BLUE","I"], answer:2, adjective:"BLUE", noun:"BAG"},
+    {sentence:"The beautiful flower is blooming.", options:["FLOWER","BEAUTIFUL","BLOOMING","THE"], answer:1, adjective:"BEAUTIFUL", noun:"FLOWER"},
+    {sentence:"The big elephant is walking.", options:["ELEPHANT","WALKING","BIG","THE"], answer:2, adjective:"BIG", noun:"ELEPHANT"},
+    {sentence:"The clever girl has a small red bag.", options:["GIRL AND BAG","CLEVER, SMALL & RED","HAS AND BAG","GIRL AND RED"], answer:1, adjective:"CLEVER, SMALL & RED", noun:"CLEVER → GIRL • SMALL → BAG • RED → BAG"}
+  ];
+
+  let index=0, score=0, answered=false;
+
+  const $ = id => document.getElementById(id);
+  const startScreen=$("startScreen"), quizScreen=$("quizScreen"), finalScreen=$("finalScreen");
+  const qnum=$("qnum"), sentence=$("sentence"), prompt=$("prompt"), options=$("options");
+  const feedback=$("feedback"), nextBtn=$("nextBtn"), progress=$("progress");
+  const speech=$("speech"), boy=$("boy"), girl=$("girl"), hearts=$("hearts");
+
+  function renderQuestion(){
+    answered=false;
+    const q=questions[index];
+    progress.textContent=`QUESTION ${index+1} / ${questions.length}`;
+    qnum.textContent=index===6 ? "🏆 FINAL CHALLENGE" : `QUESTION ${index+1}`;
+    sentence.textContent=q.sentence;
+    prompt.textContent=index===6 ? "Find the adjectives!" : "Which word is the adjective?";
+    options.innerHTML="";
+    q.options.forEach((opt,i)=>{
+      const b=document.createElement("button");
+      b.type="button"; b.className="option";
+      b.textContent=`${String.fromCharCode(65+i)}   ${opt}`;
+      b.addEventListener("click",()=>choose(i,b));
+      options.appendChild(b);
+    });
+    feedback.className="feedback hidden";
+    feedback.innerHTML="";
+    nextBtn.classList.add("hidden");
+    speech.textContent="Choose the best answer!";
+    boy.textContent="👦🏻"; girl.textContent="👧🏻";
+    hearts.textContent="❤️❤️❤️❤️❤️";
+  }
+
+  function choose(choice, clicked){
+    if(answered) return;
+    answered=true;
+    const q=questions[index];
+    const buttons=[...options.querySelectorAll(".option")];
+    buttons.forEach(b=>b.disabled=true);
+    clicked.classList.add(choice===q.answer ? "correct" : "wrong");
+    if(choice===q.answer){
+      score++;
+      buttons[q.answer].classList.add("correct");
+      feedback.className="feedback good";
+      feedback.innerHTML=`<h2>🎉 GREAT JOB!</h2><p>You found the adjective!</p><div class="answer">${q.adjective}</div><p>${q.adjective} describes the ${q.noun}.</p>`;
+      speech.textContent="Awesome! Keep going! 🌟";
+      boy.textContent="😄"; girl.textContent="🥳";
+      hearts.textContent="💚💚💚💚💚";
+      makeConfetti(24);
+    }else{
+      buttons[q.answer].classList.add("correct");
+      feedback.className="feedback bad";
+      feedback.innerHTML=`<h2>😯 OOPS! TRY AGAIN!</h2><p>Correct Answer:</p><div class="answer">${q.adjective}</div><p>${q.adjective} describes the ${q.noun}.</p>`;
+      speech.textContent="That's okay! Learn it and try the next one. 💪";
+      boy.textContent="😟"; girl.textContent="😕";
+      hearts.textContent="❤️❤️❤️🤍🤍";
+    }
+    feedback.classList.remove("hidden");
+    nextBtn.textContent=index===questions.length-1 ? "FINISH QUIZ →" : "NEXT QUESTION →";
+    nextBtn.classList.remove("hidden");
+  }
+
+  function start(){
+    index=0; score=0;
+    startScreen.classList.add("hidden");
+    finalScreen.classList.add("hidden");
+    quizScreen.classList.remove("hidden");
+    renderQuestion();
+  }
+
+  function next(){
+    if(index<questions.length-1){
+      index++;
+      renderQuestion();
+    }else{
+      quizScreen.classList.add("hidden");
+      finalScreen.classList.remove("hidden");
+      progress.textContent="COMPLETE";
+      $("finalScore").textContent=`You scored ${score} / ${questions.length}!`;
+      makeConfetti(70);
+    }
+  }
+
+  function again(){
+    finalScreen.classList.add("hidden");
+    quizScreen.classList.remove("hidden");
+    index=0; score=0; renderQuestion();
+  }
+
+  function makeConfetti(n){
+    const box=$("confetti");
+    if(!box) return;
+    for(let i=0;i<n;i++){
+      const piece=document.createElement("i");
+      piece.style.left=(Math.random()*100)+"%";
+      piece.style.top=(-10-Math.random()*30)+"px";
+      piece.style.animationDelay=(Math.random()*.35)+"s";
+      piece.style.transform=`rotate(${Math.random()*360}deg)`;
+      box.appendChild(piece);
+      setTimeout(()=>piece.remove(),1900);
+    }
+  }
+
+  $("startBtn").addEventListener("click",start);
+  nextBtn.addEventListener("click",next);
+  $("againBtn").addEventListener("click",again);
+  const fullscreenBtn = document.getElementById("fullscreenBtn");
+  if (fullscreenBtn) {
+    fullscreenBtn.addEventListener("click", async () => {
+      try {
+        if (!document.fullscreenElement) {
+          await document.documentElement.requestFullscreen();
+        } else {
+          await document.exitFullscreen();
+        }
+      } catch(e) {}
+    });
+    document.addEventListener("fullscreenchange", () => {
+      fullscreenBtn.textContent = document.fullscreenElement ? "⛶ EXIT FULL SCREEN" : "⛶ FULL SCREEN";
+    });
+  }
+
+})();
+</script>
+</body>
+</html>
