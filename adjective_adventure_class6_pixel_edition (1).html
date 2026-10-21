@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#b7f3e2">
+<title>Adjective Adventure | Class 6 English Grammar</title>
+<style>
+:root{
+  --ink:#17345b; --muted:#52718d; --purple:#168be0; --purple2:#67d7ff;
+  --pink:#ff7eb6; --gold:#ffdc48; --paper:#ffffff; --line:#c9ecff;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; min-height:100vh; font-family: "Trebuchet MS", Arial, sans-serif; color:var(--ink);
+  background:
+    radial-gradient(circle at 8% 7%, #fff08a 0, transparent 23%),
+    radial-gradient(circle at 92% 12%, #ffcee5 0, transparent 25%),
+    radial-gradient(circle at 85% 85%, #b7f3ff 0, transparent 26%),
+    linear-gradient(135deg,#e6f8ff 0%,#fffdf0 48%,#fff0f7 100%);
+  padding:24px 16px 40px; overflow-x:hidden;
+}
+body:before,body:after{content:"★";position:fixed;color:#ffbd28;opacity:.75;font-size:34px;pointer-events:none;animation:floaty 3s ease-in-out infinite}
+body:before{top:12%;left:3%} body:after{right:4%;bottom:10%;font-size:42px;animation-delay:.7s}
+@keyframes floaty{0%,100%{transform:translateY(0) rotate(-8deg)}50%{transform:translateY(-10px) rotate(10deg)}}
+.app{max-width:900px;margin:auto}
+.topline{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:.2px}
+.brandmark{display:grid;place-items:center;width:42px;height:42px;border-radius:15px;color:white;background:linear-gradient(145deg,#23b9f4,#1476e8);box-shadow:0 8px 20px #169fe744;font-size:21px}
+.pill{border:1px solid #e6defa;background:#ffffffb8;border-radius:999px;padding:9px 13px;font-size:12px;font-weight:800;color:#6857a3}
+.hero{text-align:center;padding:16px 10px 25px}
+.kicker{display:inline-flex;gap:7px;align-items:center;border-radius:999px;background:#fff;border:1px solid #eee7ff;padding:8px 13px;color:#7459c9;font-weight:800;font-size:12px;letter-spacing:1.3px;text-transform:uppercase}
+h1{font-size:clamp(30px,5vw,49px);line-height:1.08;margin:17px 0 10px;letter-spacing:-1.6px}
+h1 span{background:linear-gradient(90deg,#078fe8,#ff66a9,#ffb829);-webkit-background-clip:text;background-clip:text;color:transparent}
+.subtitle{color:var(--muted);font-size:15px;line-height:1.6;margin:0 auto;max-width:560px}
+.panel{background:#ffffffd9;border:1px solid #fff;border-radius:27px;box-shadow:0 18px 60px #47318112,0 3px 14px #47318108;overflow:hidden}
+.progress-wrap{padding:22px 26px 0}
+.progress-meta{display:flex;justify-content:space-between;gap:12px;font-size:12px;font-weight:800;color:#82799a;margin-bottom:10px}
+.progress-track{height:8px;border-radius:20px;background:#eee9fa;overflow:hidden}
+.progress-fill{height:100%;width:6.666%;border-radius:20px;background:linear-gradient(90deg,#18b8f2,#ff80ba,#ffca38);transition:width .35s ease}
+.question-area{padding:27px 28px 30px}
+.qtop{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:17px}
+.qnum{font-size:12px;font-weight:900;color:#866be0;background:#e0f6ff;padding:8px 11px;border-radius:10px}
+.tag{font-size:12px;color:#9a7197;font-weight:800}
+.question{font-size:clamp(21px,3vw,29px);line-height:1.35;margin:0 0 24px;letter-spacing:-.4px}
+.options{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.option{
+  width:100%;min-height:66px;text-align:left;display:flex;align-items:center;gap:13px;padding:13px 15px;
+  background:#fff;border:1.5px solid var(--line);border-radius:17px;color:var(--ink);font:inherit;font-size:15px;font-weight:700;
+  cursor:pointer;transition:transform .16s,border-color .16s,box-shadow .16s,background .16s;
+}
+.option:hover:not(:disabled){transform:translateY(-2px);border-color:#b8a6ff;box-shadow:0 8px 20px #6d54c214}
+.letter{flex:0 0 34px;width:34px;height:34px;display:grid;place-items:center;border-radius:11px;background:#e2f6ff;color:#087fc3;font-size:13px;font-weight:900}
+.option.correct{border-color:#54c9a2;background:#effcf7}.option.correct .letter{background:#25ae82;color:white}
+.option.wrong{border-color:#f28aa5;background:#fff3f6}.option.wrong .letter{background:#e96988;color:white}
+.option:disabled{cursor:default}
+.feedback{display:none;margin-top:17px;border-radius:14px;padding:13px 15px;font-size:14px;font-weight:700;line-height:1.5}
+.feedback.show{display:block}.feedback.good{background:#eafaf3;color:#14795c}.feedback.bad{background:#fff0f3;color:#ad3858}
+.actions{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:24px}
+.small-note{font-size:12px;color:#938ba7}
+.btn{border:0;border-radius:14px;padding:13px 19px;font:inherit;font-size:14px;font-weight:900;cursor:pointer;transition:transform .15s,opacity .15s}
+.btn:hover{transform:translateY(-1px)}.btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.btn-primary{color:white;background:linear-gradient(110deg,#0e9fe8,#2876ec);box-shadow:0 8px 18px #168de833}
+.btn-soft{background:#f2edff;color:#7055c7}
+.footer{text-align:center;font-size:12px;color:#9a92ac;margin-top:19px}
+.modal-backdrop{position:fixed;inset:0;background:#17112dbd;backdrop-filter:blur(9px);display:none;align-items:center;justify-content:center;padding:18px;z-index:10}
+.modal-backdrop.open{display:flex;animation:fadeIn .22s ease}
+.modal{width:min(470px,100%);border-radius:29px;padding:25px 24px 24px;text-align:center;background:linear-gradient(145deg,#fffaff,#f6f1ff 65%,#fff5f9);box-shadow:0 28px 100px #100a2b66;position:relative;overflow:hidden}
+.modal:before{content:"";position:absolute;width:220px;height:220px;border-radius:50%;background:#eadfff;filter:blur(3px);top:-135px;left:calc(50% - 110px);opacity:.8}
+.modal>*{position:relative}
+.sparkles{font-size:19px;letter-spacing:8px;color:#c49a38;margin:0 0 7px}
+.modal h2{font-size:30px;margin:4px 0 7px;letter-spacing:-.7px}
+.modal-sub{color:#827795;font-size:14px;line-height:1.5;margin:0 auto 20px;max-width:320px}
+.slot-machine{display:flex;align-items:center;justify-content:center;gap:8px;padding:13px;background:linear-gradient(135deg,#168be0,#5746ce);border:4px solid #ffda45;border-radius:25px;box-shadow:inset 0 0 0 2px #ffffff55,0 12px 26px #187fc52c;margin-bottom:17px}
+.slot{width:124px;height:124px;display:block;border-radius:20px;background:linear-gradient(#fff,#eafaff);font-size:70px;box-shadow:inset 0 -5px 0 #b9e9ff;overflow:hidden;border:3px solid #fff}
+.single-slot{position:relative}
+.reel{display:flex;flex-direction:column;align-items:center;transform:translateY(0);will-change:transform}
+.reel .emoji{height:124px;min-height:124px;width:100%;display:grid;place-items:center;line-height:1}
+.slot.winner{outline:4px solid #ffdf42;box-shadow:0 0 0 7px #ffdf4244,inset 0 -5px 0 #b9e9ff;transform:scale(1.06)}
+.emoji{display:inline-block}
+.machine-caption{font-size:11px;font-weight:900;letter-spacing:1.5px;color:#7b6a9e;margin:0 0 18px}
+.reward-line{font-size:14px;font-weight:800;color:#4f3c80;margin-bottom:20px}
+.reward-line span{color:#bc7a28}
+.modal .btn{width:100%}
+.modal .btn-soft{margin-top:9px}
+@keyframes roll{0%{transform:translateY(-17px);filter:blur(1px)}50%{transform:translateY(0);filter:blur(0)}100%{transform:translateY(17px);filter:blur(1px)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes pop{0%{transform:scale(.8);opacity:.3}75%{transform:scale(1.04)}100%{transform:scale(1);opacity:1}}
+@media(max-width:620px){
+ body{padding:14px 11px 28px}.topline{margin-bottom:7px}.brand{font-size:14px}.brandmark{width:36px;height:36px}.pill{font-size:10px;padding:8px 10px}
+ .hero{padding:19px 4px 21px}.subtitle{font-size:13px}.progress-wrap{padding:18px 17px 0}.question-area{padding:23px 17px 21px}
+ .options{grid-template-columns:1fr;gap:10px}.option{min-height:59px;padding:11px 12px}.question{margin-bottom:19px}.actions{margin-top:19px}
+ .slot{width:110px;height:110px;font-size:60px}.reel .emoji{height:110px;min-height:110px}.modal{padding:23px 17px 19px}.modal h2{font-size:27px}
+}
+
+/* PIXEL-ART CLASSROOM UPDATE */
+:root{--ink:#20334d;--muted:#526b83;--purple:#6b55d9;--purple2:#8ce8ff;--pink:#ff83b7;--gold:#ffdb55;--paper:#fffef4;--line:#243b55}
+body{background-color:#b7f3e2;background-image:linear-gradient(90deg,#ffffff26 2px,transparent 2px),linear-gradient(#ffffff26 2px,transparent 2px),linear-gradient(180deg,#a8e9ff 0%,#d8f9d6 58%,#8bd89e 58%,#8bd89e 100%);background-size:24px 24px,24px 24px,100% 100%;image-rendering:pixelated}
+body:before,body:after{font-family:monospace;text-shadow:3px 3px 0 #f59c3d;animation:floaty 2s steps(4,end) infinite}
+.brandmark,.pill,.kicker,.qnum,.option,.feedback,.btn,.panel,.modal,.slot-machine,.slot{border-radius:4px!important}
+.panel{border:4px solid #243b55;box-shadow:8px 8px 0 #243b5540;background:#fffef4}
+.brandmark{border:3px solid #243b55;box-shadow:4px 4px 0 #243b55}
+.pill{border:2px solid #243b55;color:#20334d;background:#fff9be}
+.kicker{border:2px solid #243b55;background:#fff9be;color:#4c3c91}
+h1{text-shadow:3px 3px 0 #ffffff}
+.progress-track{border:2px solid #243b55;border-radius:0;background:#d6e4f0}
+.progress-fill{border-radius:0;background:repeating-linear-gradient(90deg,#55c6f2 0 14px,#70dfa8 14px 28px,#ffcc57 28px 42px)}
+.question-area{background-image:radial-gradient(#263d5512 1px,transparent 1px);background-size:8px 8px}
+.option{border:3px solid #243b55;box-shadow:3px 3px 0 #243b5526;background:#fff}
+.option:hover:not(:disabled){transform:translate(-2px,-2px);box-shadow:5px 5px 0 #243b5530}
+.option.correct{border-color:#16845e;background:#d7ffe8;box-shadow:3px 3px 0 #16845e}
+.option.wrong{border-color:#d34e72;background:#ffe2eb;box-shadow:3px 3px 0 #d34e72}
+.letter{border-radius:3px;background:#d8f3ff;border:2px solid #243b55}
+.btn{border:3px solid #243b55;box-shadow:4px 4px 0 #243b55;color:#fff}
+.btn-primary{background:#4966dc}.btn-soft{background:#ffdf6e;color:#243b55}
+.btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 #243b55}
+.modal{border:4px solid #243b55;box-shadow:8px 8px 0 #11182766}
+.slot-machine{border:4px solid #243b55;box-shadow:5px 5px 0 #243b55;background:#6152d8}
+.slot{border:3px solid #243b55}
+.pixel-teacher{display:flex;align-items:center;gap:14px;margin:0 0 20px;padding:12px;background:#e7fff3;border:3px solid #243b55;box-shadow:4px 4px 0 #243b5520}
+.teacher-avatar{flex:0 0 66px;width:66px;height:66px;display:grid;place-items:center;background:#ffe5a7;border:3px solid #243b55;box-shadow:inset -5px -5px 0 #eab86a;font-size:39px;image-rendering:pixelated}
+.teacher-copy{font-size:13px;line-height:1.45;font-weight:800}.teacher-copy strong{display:block;font-size:14px;margin-bottom:3px;color:#4c3c91}
+.modal-backdrop.wrong-mode{background:#162b46d9}.wrong-modal .teacher-avatar{margin:0 auto 10px}.wrong-modal h2{color:#d34e72}
+.wrong-answer-line{background:#dffff0;border:3px solid #16845e;padding:10px;margin:12px 0;font-weight:900}
+@media(max-width:620px){.pixel-teacher{align-items:flex-start}.teacher-avatar{width:56px;height:56px;flex-basis:56px;font-size:32px}}
+
+
+
+/* DEVICE-COMFORT UPDATE: phone, tablet, laptop, touch and landscape */
+html{width:100%;min-height:100%;-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-behavior:smooth}
+body{width:100%;min-width:0;min-height:100vh;min-height:100dvh;padding-left:max(12px,env(safe-area-inset-left));padding-right:max(12px,env(safe-area-inset-right));padding-bottom:max(24px,env(safe-area-inset-bottom));}
+.app,.panel,.question-area,.hero,.topline{min-width:0;max-width:100%}
+.topline{flex-wrap:wrap}
+.brand,.pill,.qtop,.actions{min-width:0}
+.question,.subtitle,.option,.teacher-copy,.feedback,.modal-sub,.reward-line,.small-note{overflow-wrap:anywhere;word-break:normal}
+.option,.btn{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.option{min-height:64px;line-height:1.35}
+.btn{min-height:46px;line-height:1.25}
+.modal-backdrop{overflow-y:auto;overscroll-behavior:contain;padding:max(12px,env(safe-area-inset-top)) 12px max(12px,env(safe-area-inset-bottom))}
+.modal{max-height:calc(100dvh - 24px);overflow-y:auto;overscroll-behavior:contain}
+.slot-machine{max-width:100%}
+@media(min-width:621px) and (max-width:900px){
+ .app{max-width:760px}.question-area{padding:24px 22px}.options{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.option{padding:12px;min-height:70px}.question{font-size:clamp(22px,3vw,28px)}
+}
+@media(max-width:620px){
+ body{padding-top:max(10px,env(safe-area-inset-top));padding-left:max(10px,env(safe-area-inset-left));padding-right:max(10px,env(safe-area-inset-right));padding-bottom:max(18px,env(safe-area-inset-bottom))}
+ .topline{align-items:center;justify-content:center;gap:8px}.brand{font-size:13px}.pill{font-size:10px;text-align:center;white-space:normal}
+ .hero{padding:16px 3px 18px}h1{font-size:clamp(29px,8vw,40px);letter-spacing:-.8px}.subtitle{font-size:14px;line-height:1.45}
+ .panel{border-width:3px;box-shadow:4px 4px 0 #243b5528;border-radius:4px!important}
+ .progress-wrap{padding:15px 13px 0}.progress-meta{font-size:11px}.question-area{padding:18px 13px 17px}.qtop{align-items:flex-start;flex-wrap:wrap;margin-bottom:13px}.tag{font-size:11px}
+ .question{font-size:clamp(20px,5.6vw,25px);line-height:1.35;margin-bottom:17px}.options{grid-template-columns:minmax(0,1fr);gap:9px}.option{min-height:58px;padding:10px;font-size:15px;gap:10px}.letter{flex-basis:31px;width:31px;height:31px}
+ .pixel-teacher{gap:10px;padding:9px;margin-bottom:16px}.teacher-copy{font-size:12px}.teacher-copy strong{font-size:13px}
+ .actions{flex-direction:column;align-items:stretch;gap:10px}.small-note{text-align:center;line-height:1.4}.actions .btn{width:100%}
+ .modal{width:min(420px,100%);padding:20px 14px 16px;border-width:3px}.modal h2{font-size:clamp(23px,7vw,29px);line-height:1.15}.modal-sub{font-size:13px;margin-bottom:14px}.slot-machine{padding:9px;margin-bottom:14px}.slot{width:100px;height:100px;font-size:55px}.reel .emoji{height:100px;min-height:100px}.machine-caption{letter-spacing:1px;margin-bottom:12px}.reward-line{margin-bottom:14px}
+}
+@media(max-width:360px){
+ .brand{font-size:12px}.brandmark{width:31px;height:31px}.pill{font-size:9px;padding:7px 8px}.question-area{padding:15px 10px}.option{font-size:14px}.teacher-avatar{width:48px;height:48px;flex-basis:48px;font-size:28px}.slot{width:88px;height:88px;font-size:49px}.reel .emoji{height:88px;min-height:88px}
+}
+@media(max-height:520px) and (orientation:landscape){
+ body{padding-top:8px;padding-bottom:12px}.hero{padding:8px 4px 12px}h1{font-size:30px;margin:8px 0}.subtitle{font-size:12px}.modal{max-height:calc(100dvh - 16px);padding:12px}.modal h2{font-size:22px}.sparkles{margin-bottom:2px}.slot{height:72px;width:72px;font-size:40px}.reel .emoji{height:72px;min-height:72px}.slot-machine{padding:6px;margin-bottom:8px}.modal-sub{margin-bottom:8px}.machine-caption{margin-bottom:8px}.reward-line{margin-bottom:8px}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="topline">
+    <div class="brand"><div class="brandmark">✦</div><span>Little Learners Club</span></div>
+    <div class="pill">CLASS 6 · ENGLISH GRAMMAR</div>
+  </div>
+  <header class="hero">
+    <div class="kicker">✧ Learn • Choose • Celebrate ✧</div>
+    <h1>Adjective <span>Adventure</span></h1>
+    <p class="subtitle">Read each question, choose your answer, and see what the lucky reward machine reveals!</p>
+  </header>
+  <main class="panel">
+    <div class="progress-wrap">
+      <div class="progress-meta"><span id="progressText">QUESTION 01 / 15</span><span id="scoreText">SCORE 0</span></div>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+    <section class="question-area" aria-live="polite">
+      <div class="qtop"><span class="qnum" id="qnum">QUESTION 01</span><span class="tag">✦ Pick the best answer</span></div>
+      <div class="pixel-teacher" aria-label="Your pixel classroom teacher">
+        <div class="teacher-avatar" aria-hidden="true">👩‍🏫</div>
+        <div class="teacher-copy"><strong>Miss Pixel says…</strong>Think carefully, little learner! An adjective describes a person, place, animal, or thing.</div>
+      </div>
+      <h2 class="question" id="question">Loading question…</h2>
+      <div class="options" id="options"></div>
+      <div class="feedback" id="feedback" role="status"></div>
+      <div class="actions">
+        <span class="small-note" id="statusNote">Choose one option to continue.</span>
+        <button class="btn btn-primary" id="nextBtn" disabled>Next question →</button>
+      </div>
+    </section>
+  </main>
+  <div class="footer">Learning is a superpower! 🌈 &nbsp;·&nbsp; Adjectives practice</div>
+</div>
+
+<div class="modal-backdrop" id="rewardModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal">
+    <p class="sparkles">✦ ✧ ✦ ✧ ✦</p>
+    <h2 id="modalTitle">Winner Reward!</h2>
+    <p class="modal-sub">A little magic is on the way! Which emoji will you win?</p>
+    <div class="slot-machine" aria-label="Lucky emoji machine">
+      <div class="slot single-slot" id="slot0"><div class="reel" id="emojiReel"><span class="emoji">😊</span><span class="emoji">🌻</span><span class="emoji">⭐</span><span class="emoji">😊</span><span class="emoji">🌻</span><span class="emoji">⭐</span></div></div>
+    </div>
+    <p class="machine-caption" id="machineCaption">SPINNING FOR YOUR REWARD</p>
+    <div class="reward-line" id="rewardLine">Your lucky reward is on its way…</div>
+    <button class="btn btn-primary" id="claimBtn" disabled>Reveal my reward ✨</button>
+    <button class="btn btn-soft" id="continueBtn" style="display:none">Continue to next question →</button>
+  </div>
+</div>
+
+<div class="modal-backdrop wrong-mode" id="wrongModal" role="dialog" aria-modal="true" aria-labelledby="wrongTitle">
+  <div class="modal wrong-modal">
+    <div class="teacher-avatar" aria-hidden="true">👩‍🏫</div>
+    <p class="sparkles">💡 ✦ 💡</p>
+    <h2 id="wrongTitle">Better Luck Next Round!</h2>
+    <p class="modal-sub" id="wrongPrompt">No worries — mistakes help us learn.</p>
+    <div class="wrong-answer-line" id="wrongCorrect"></div>
+    <p class="modal-sub" id="wrongExplain"></p>
+    <button class="btn btn-primary" id="wrongContinue">Got it, teacher! 🌟</button>
+  </div>
+</div>
+
+<script>
+const questions = [
+ {q:"What is an adjective?", options:["A word that shows an action","A word that describes a noun or pronoun","A word that joins sentences","A word that expresses an action"], answer:1, explain:"An adjective describes a noun or pronoun."},
+ {q:"Identify the adjective in the sentence: “The beautiful garden has many flowers.”", options:["Garden","Has","Beautiful","Flowers"], answer:2, explain:"“Beautiful” describes the garden."},
+ {q:"Which word is an adjective in “The clever student answered correctly”?", options:["Student","Answered","Correctly","Clever"], answer:3, explain:"“Clever” describes the student. “Correctly” describes how the student answered."},
+ {q:"Choose the correct adjective: “The giraffe has a _____ neck.”", options:["Tall","Long","Slowly","Run"], answer:1, explain:"“Long” describes the giraffe’s neck."},
+ {q:"Identify the adjectives in the sentence: “The small brown dog barked loudly.”", options:["Small and brown","Dog and barked","Brown and loudly","Small and loudly"], answer:0, explain:"“Small” and “brown” describe the dog."},
+ {q:"Which of the following is NOT an adjective?", options:["Happy","Intelligent","Quickly","Beautiful"], answer:2, explain:"“Quickly” is an adverb; it usually describes a verb."},
+ {q:"Fill in the blank: “The soup is too _____ to drink.”", options:["Hot","Heat","Slowly","Boil"], answer:0, explain:"“Hot” is an adjective describing the soup."},
+ {q:"Identify the adjective of colour in the sentence: “She wore a yellow dress.”", options:["She","Wore","Yellow","Dress"], answer:2, explain:"“Yellow” describes the colour of the dress."},
+ {q:"Which adjective describes the number of objects in “I have five pencils”?", options:["I","Have","Five","Pencils"], answer:2, explain:"“Five” tells us how many pencils there are."},
+ {q:"Choose the correct adjective: “The _____ baby was sleeping peacefully.”", options:["Gently","Cute","Sleep","Peacefully"], answer:1, explain:"“Cute” describes the baby."},
+ {q:"Which sentence contains an adjective?", options:["Birds fly high.","Riya sings sweetly.","The red balloon floated away.","The children laughed loudly."], answer:2, explain:"“Red” is an adjective describing the balloon."},
+ {q:"Identify the adjective that describes size: “We live in a huge house.”", options:["We","Live","Huge","House"], answer:2, explain:"“Huge” describes the size of the house."},
+ {q:"Fill in the blank: “Mount Everest is a _____ mountain.”", options:["High","Highly","Height","Climb"], answer:0, explain:"“High” is an adjective describing the mountain."},
+ {q:"Which sentence contains TWO adjectives?", options:["The boy runs quickly.","The old man carried a heavy bag.","Birds sing beautifully.","The baby cried loudly."], answer:1, explain:"“Old” describes the man, and “heavy” describes the bag."},
+ {q:"Identify the adjectives in the sentence: “The three hungry children ate delicious food.”", options:["Three, hungry, delicious","Children, ate, food","Hungry, ate, delicious","Three, children, food"], answer:0, explain:"“Three” tells the number, “hungry” describes the children, and “delicious” describes the food."}
+];
+const emojis=["😊","🌻","⭐"];
+let current=0, score=0, answered=false, chosenReward="";
+const $=id=>document.getElementById(id);
+function render(){
+ const item=questions[current]; answered=false;
+ $("progressText").textContent=`QUESTION ${String(current+1).padStart(2,"0")} / ${questions.length}`;
+ $("qnum").textContent=`QUESTION ${String(current+1).padStart(2,"0")}`;
+ $("scoreText").textContent=`SCORE ${score}`;
+ $("progressFill").style.width=`${((current+1)/questions.length)*100}%`;
+ $("question").textContent=item.q;
+ $("options").innerHTML="";
+ item.options.forEach((opt,i)=>{
+   const b=document.createElement("button"); b.className="option";
+   b.innerHTML=`<span class="letter">${String.fromCharCode(65+i)}</span><span>${escapeHTML(opt)}</span>`;
+   b.addEventListener("click",()=>selectAnswer(i,b)); $("options").appendChild(b);
+ });
+ $("feedback").className="feedback"; $("feedback").textContent="";
+ $("nextBtn").disabled=true;
+ $("nextBtn").textContent=current===questions.length-1?"See my result →":"Next question →";
+ $("statusNote").textContent="Choose one option to continue.";
+}
+function escapeHTML(s){return s.replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;");}
+function selectAnswer(index,button){
+ if(answered)return; answered=true;
+ const item=questions[current], buttons=[...$("options").querySelectorAll("button")];
+ buttons.forEach(b=>b.disabled=true);
+ if(index===item.answer){
+   score++; button.classList.add("correct");
+   $("feedback").className="feedback show good";
+   $("feedback").textContent="✨ That's right! "+item.explain;
+   $("statusNote").textContent="Correct answer — your reward is ready!";
+   $("scoreText").textContent=`SCORE ${score}`;
+   $("nextBtn").disabled=false;
+   openReward();
+ }else{
+   button.classList.add("wrong"); buttons[item.answer].classList.add("correct");
+   $("feedback").className="feedback show bad";
+   $("feedback").textContent="Better luck next round! "+item.explain;
+   $("statusNote").textContent="Teacher tip reviewed — continue when ready.";
+   $("nextBtn").disabled=false;
+   $("wrongPrompt").textContent="That’s okay! Let’s learn it together.";
+   $("wrongCorrect").textContent="✓ Correct answer: "+item.options[item.answer];
+   $("wrongExplain").textContent=item.explain;
+   $("wrongModal").classList.add("open");
+ }
+}
+let audioCtx=null, soundTimer=null;
+function playTick(){
+  try{
+    audioCtx=audioCtx||new (window.AudioContext||window.webkitAudioContext)();
+    const osc=audioCtx.createOscillator(), gain=audioCtx.createGain();
+    osc.type="square"; osc.frequency.setValueAtTime(620+Math.random()*260,audioCtx.currentTime);
+    gain.gain.setValueAtTime(0.035,audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime+0.045);
+    osc.connect(gain);gain.connect(audioCtx.destination);osc.start();osc.stop(audioCtx.currentTime+0.05);
+  }catch(e){}
+}
+function playWin(){
+  try{
+    audioCtx=audioCtx||new (window.AudioContext||window.webkitAudioContext)();
+    [523,659,784,1046].forEach((f,i)=>{const osc=audioCtx.createOscillator(),gain=audioCtx.createGain();osc.type="sine";osc.frequency.value=f;gain.gain.setValueAtTime(0.001,audioCtx.currentTime+i*.11);gain.gain.linearRampToValueAtTime(.12,audioCtx.currentTime+i*.11+.025);gain.gain.exponentialRampToValueAtTime(.001,audioCtx.currentTime+i*.11+.23);osc.connect(gain);gain.connect(audioCtx.destination);osc.start(audioCtx.currentTime+i*.11);osc.stop(audioCtx.currentTime+i*.11+.24);});
+  }catch(e){}
+}
+function openReward(){
+  chosenReward=emojis[Math.floor(Math.random()*emojis.length)];
+  $("rewardModal").classList.add("open");
+  $("claimBtn").disabled=true; $("claimBtn").style.display="block";
+  $("claimBtn").textContent="Reveal my reward ✨";
+  $("continueBtn").style.display="none";
+  $("machineCaption").textContent="SPINNING FOR YOUR REWARD!";
+  $("rewardLine").textContent="Whoa! Which lucky emoji will you get?";
+  const slot=$("slot0"), reel=$("emojiReel");
+  slot.classList.remove("winner");
+  reel.style.transition="none";reel.style.transform="translateY(0px)";
+  const itemHeight=window.matchMedia("(max-width: 360px)").matches?88:window.matchMedia("(max-width: 620px)").matches?100:124;
+  const sequence=[];
+  for(let i=0;i<32;i++) sequence.push(emojis[Math.floor(Math.random()*emojis.length)]);
+  sequence.push(chosenReward);
+  reel.innerHTML=sequence.map(e=>`<span class="emoji">${e}</span>`).join("");
+  reel.style.transform="translateY(0px)";
+  void reel.offsetHeight;
+  reel.style.transition="transform 2.35s cubic-bezier(.08,.72,.13,1)";
+  reel.style.transform=`translateY(-${(sequence.length-1)*itemHeight}px)`;
+  if(soundTimer)clearInterval(soundTimer);
+  playTick();soundTimer=setInterval(playTick,65);
+  setTimeout(()=>{
+    if(soundTimer){clearInterval(soundTimer);soundTimer=null;}
+    slot.classList.add("winner");
+    $("machineCaption").textContent="🎉 YOUR LUCKY EMOJI! 🎉";
+    $("rewardLine").innerHTML="Your reward: <span>"+chosenReward+"</span> — you did it!";
+    $("claimBtn").disabled=false;$("claimBtn").textContent="Yay! Claim my reward 🎁";
+    playWin();
+  },2450);
+}
+$("claimBtn").addEventListener("click",()=>{
+ $("rewardModal").classList.remove("open");
+});
+$("wrongContinue").addEventListener("click",()=>{
+ $("wrongModal").classList.remove("open");
+});
+$("nextBtn").addEventListener("click",()=>{
+ if(!answered)return;
+ if(current<questions.length-1){current++;render();}
+ else showResults();
+});
+function showResults(){
+ const pct=Math.round(score/questions.length*100);
+ $("qnum").textContent="ALL DONE!";
+ $("question").textContent=`You scored ${score} out of ${questions.length}!`;
+ $("options").innerHTML="";
+ $("feedback").className="feedback show good";
+ $("feedback").textContent=pct>=80?"Wonderful work! You’re becoming an adjective expert. ✨":pct>=50?"Nice effort! Review the answers and try again to improve your score. 🌟":"Good try! Practice makes progress—give it another go. 💜";
+ $("statusNote").textContent=`Final score: ${pct}%`;
+ $("nextBtn").disabled=false; $("nextBtn").textContent="Play again ↻";
+ $("nextBtn").onclick=()=>{current=0;score=0;$("nextBtn").onclick=null;render();};
+ $("progressText").textContent="QUIZ COMPLETE";
+ $("progressFill").style.width="100%";
+ $("scoreText").textContent=`SCORE ${score}`;
+}
+render();
+</script>
+</body>
+</html>
